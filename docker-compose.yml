@@ -2,7 +2,9 @@ version: "3.9"
 
 services:
   app:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfile.api
     ports:
       - "8080:8080"
     depends_on:
@@ -11,6 +13,17 @@ services:
       - .env
     volumes:
       - .:/app
+
+  worker:
+    build: 
+     context: .
+     dockerfile: Dockerfile.worker
+    depends_on:
+      - db
+    env_file:
+      - .env
+    volumes:
+      - .:/worker
 
   db:
     image: postgres:latest
