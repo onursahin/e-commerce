@@ -10,7 +10,9 @@ func RegisterRoutes(app *fiber.App) {
 		return c.JSON(fiber.Map{"message": "healty"})
 	})
 
-	auth := app.Group("/auth")
+	api := app.Group("/api/v1")
+	auth := api.Group("/auth")
+
 	auth.Post("/signup", authHandler.SignUp)
-	auth.Post("/signin", authHandler.SignIn)
+	auth.Post("/login", authHandler.Login)
 }
